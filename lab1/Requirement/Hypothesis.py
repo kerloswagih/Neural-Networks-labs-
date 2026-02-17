@@ -31,11 +31,11 @@ class HypothesisFunction:
         ), f"Your input must be consistent the value l={self.l}"
 
         # TODO [4]: Compute a as mentioned above
-        a = np.einsum("ij,jk->ik", self.Wh, x) + self.bh
+        a: np.ndarray = np.einsum("ij,jk->ik", self.Wh, x) + self.bh
         a = np.tanh(a)
 
         # TODO [5]: Compute output ignoring ReLU
-        y = np.einsum("ij,jk->ik", self.Wo, a) + self.bo
+        y: np.ndarray = np.einsum("ij,jk->ik", self.Wo, a) + self.bo
 
         # TODO [6]: Apply ReLU on the output with numpy boolean masking
         y[y <= 0] = 0
@@ -48,13 +48,13 @@ class HypothesisFunction:
         y2, _ = self.forward(x2)
 
         # TODO [7]: Concatenate the two outputs
-        z = np.concatenate((y1, y2))
+        z: np.ndarray = np.concatenate((y1, y2))
 
         # TODO [8]: Normalize the concatenated result
-        z_mean = np.mean(z)
-        z_std = np.std(z)
+        z_mean: float = np.mean(z)
+        z_std: float = np.std(z)
 
-        z_bar = (z - z_mean) / z_std
+        z_bar: np.ndarray = (z - z_mean) / z_std
 
         return z_bar
 
@@ -63,8 +63,9 @@ class HypothesisFunction:
     def count_params(self) -> int:
         # TODO [10]: Make a lambda function num_params that takes an array z and returns np.prod(z.shape)
         num_params = lambda z: np.prod(z.shape)
+        
         # TODO [11]: return the total number of parameters by summing the function over Wh, Wo, bh, bo
-        total_params = (
+        total_params: int = (
             num_params(self.Wh)
             + num_params(self.Wo)
             + num_params(self.bh)
