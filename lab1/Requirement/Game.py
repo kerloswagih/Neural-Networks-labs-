@@ -35,10 +35,7 @@ def guessing_game(max: int, *, attempts: int) -> tuple[bool, list[int], int]:
     return False, guesses, target_number
 # TODO [2]: implement the play_game function
 def play_game() -> None:
-    """
-    Main game loop that calls guessing_game with max=20 and attempts=5.
-    Validates results with assertions and asks to play again only if the player lost.
-    """
+    
     max_value: int = 20
     attempts: int = 5
     
@@ -60,10 +57,15 @@ def play_game() -> None:
             assert chosen_int not in guesses, f"Error: {chosen_int} should not be in guesses {guesses}"
             print(f"\n You lost! The number was {chosen_int}. Your guesses: {guesses}")
             
-            play_again: str = input("Do you want to play again? (yes/no): ").strip().lower()
-            if play_again != 'yes':
-                print("Thanks for playing! Goodbye!")
-                break
+            while True:
+                play_again: str = input("Do you want to play again? (yes/no): ").strip().lower()
+                if play_again == 'yes':
+                    break
+                elif play_again == 'no':
+                    print("Thanks for playing! Goodbye!")
+                    return
+                else:
+                    print("I didn't understand that. Please enter 'yes' or 'no'.")
 
 
 if __name__ == "__main__":
