@@ -14,6 +14,12 @@ def plot_model_contours(model, x_data, y_data,  hyperparams_list=[0], trained=Fa
 
     plt.style.use('dark_background')
     fig, ax = plt.subplots(num_rows, num_cols, figsize=(16, 4*num_rows), dpi=200)
+    
+    # Ensure ax is always a 2D array for consistent indexing
+    if num_rows == 1 and num_cols == 1:
+        ax = np.array([[ax]])
+    elif num_rows == 1 or num_cols == 1:
+        ax = ax.reshape(num_rows, num_cols)
 
     if not trained:
         for i, hyperparams in enumerate(tqdm(hyperparams_list, desc="Hyperparameters")):
